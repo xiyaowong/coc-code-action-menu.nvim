@@ -30,6 +30,17 @@ do
 	end
 end
 
+-- personal changes
+do
+	local BaseWindow = require("code_action_menu.windows.base_window")
+	local open = BaseWindow.open
+	BaseWindow.open = function(self, ...)
+		open(self, ...)
+		-- winbend makes the contents of the diff window very ambiguous
+		vim.wo[self.window_number].winblend = 2
+	end
+end
+
 local function feedkeys(keys)
 	api.nvim_feedkeys(api.nvim_replace_termcodes(keys, true, true, true), "n", true)
 end
