@@ -1,5 +1,6 @@
 local M = {}
 
+local api = vim.api
 local CocActionAsync = vim.fn.CocActionAsync
 
 local actions = {}
@@ -29,6 +30,10 @@ do
 	end
 end
 
+local function feedkeys(keys)
+	api.nvim_feedkeys(api.nvim_replace_termcodes(keys, true, true, true), "n", true)
+end
+
 function _G.open_coc_code_action_menu(mode)
 	if vim.g.coc_service_initialized ~= 1 then
 		print("Coc is not ready!")
@@ -51,6 +56,9 @@ function _G.open_coc_code_action_menu(mode)
 			end
 
 			open_code_action_menu()
+			if vim.startswith(vim.bo.filetype, "code-action-menu") and api.nvim_get_mode().mode:lower() == "v" then
+				feedkeys("<esc>")
+			end
 		end
 	end)
 end
