@@ -37,7 +37,7 @@ do
 	BaseWindow.open = function(self, ...)
 		open(self, ...)
 		-- winbend makes the contents of the diff window very ambiguous
-		vim.wo[self.window_number].winblend = 2
+		pcall(api.nvim_win_set_option, self.window_number, "winblend", 2)
 	end
 end
 
